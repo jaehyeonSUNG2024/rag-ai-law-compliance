@@ -1,0 +1,17 @@
+[project]
+name = "rag-pipeline-lab"
+version = "0.1.0"
+description = "RAG Pipeline Step by Step Lab"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "langchain==1.4.2",
+  "langchain-openai==1.6.3",
+  "langchain-community==0.4.2",
+  "langchain-classic==1.0.8",
+  "langchain-text-splitters==1.1.2",
+  "langgraph==1.2.11",
+  "faiss-cpu==1.15.1",
+  "pypdf==6.19.0",
+  "python-dotenv==1.2.3",
+  "rank-bm25==0.2.2",
+]

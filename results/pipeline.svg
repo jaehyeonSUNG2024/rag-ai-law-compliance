@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 790" width="1000" height="790" font-family="Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .t  { font-size: 15px; fill: #0f172a; font-weight: 700; }
+      .s  { font-size: 13px; fill: #334155; }
+      .xs { font-size: 12px; fill: #64748b; }
+      .code { font-size: 12px; fill: #1e40af; font-family: Menlo, Consolas, monospace; }
+      .sec { font-size: 16px; font-weight: 800; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .ln  { stroke: #475569; stroke-width: 2; fill: none; }
+      .dash { stroke: #94a3b8; stroke-width: 1.8; fill: none; stroke-dasharray: 6 5; }
+      .bt  { font-size: 12px; font-weight: 800; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect width="1000" height="790" fill="#ffffff"/>
+
+  <text x="40" y="42" font-size="22" font-weight="800" fill="#0f172a">최종 Pipeline · AI기본법 컴플라이언스 체커</text>
+  <text x="40" y="66" class="s">Baseline 대비  Recall@4 0.611 → <tspan font-weight="800" fill="#047857">0.722</tspan>   ·   MRR 0.639 → <tspan font-weight="800" fill="#047857">0.778</tspan></text>
+
+  <!-- ===== ① 색인 ===== -->
+  <rect x="20" y="88" width="960" height="250" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="40" y="116" class="sec" fill="#1d4ed8">① 색인 — 문서 준비 (최초 1회)</text>
+
+  <rect x="40" y="134" width="200" height="180" rx="10" class="box"/>
+  <text x="60" y="164" class="t">문서 3종</text>
+  <text x="60" y="194" class="s">• AI기본법  11개 조</text>
+  <text x="60" y="218" class="s">• 시행령  7개 조</text>
+  <text x="60" y="242" class="s">• 사업자 FAQ  6개</text>
+  <text x="60" y="276" class="xs">실습용 샘플 · 약 6,500자</text>
+  <text x="60" y="296" class="xs">원문 교체 시 코드 수정 없음</text>
+
+  <path d="M240,224 L282,224" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="285" y="134" width="260" height="180" rx="10" class="box" stroke="#2563eb"/>
+  <circle cx="525" cy="154" r="12" fill="#2563eb"/><text x="525" y="158" class="bt" text-anchor="middle">②</text>
+  <text x="305" y="164" class="t">조(條) · FAQ 단위 분할</text>
+  <text x="305" y="192" class="s">24 Chunk  (글자 수 분할 50개 대신)</text>
+  <text x="305" y="220" class="s">본문 앞에 출처 머리글 부착</text>
+  <rect x="305" y="234" width="222" height="28" rx="6" fill="#eef2ff"/>
+  <text x="315" y="253" class="code">[AI기본법] 제34조(…책무)</text>
+  <text x="305" y="292" class="xs">조문이 중간에 잘리지 않고, 라벨 유지</text>
+
+  <path d="M545,200 L590,170" class="ln" marker-end="url(#arr)"/>
+  <path d="M545,250 L590,275" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="595" y="128" width="365" height="88" rx="10" class="box" stroke="#7c3aed"/>
+  <circle cx="940" cy="148" r="12" fill="#7c3aed"/><text x="940" y="152" class="bt" text-anchor="middle">③</text>
+  <text x="615" y="156" class="t">Child 59개 → FAISS (Dense)</text>
+  <text x="615" y="180" class="s">항·호 단위 150자 + 조 머리글</text>
+  <text x="615" y="202" class="xs">작은 조각으로 찾고, 반환은 조 전체(Parent)</text>
+
+  <rect x="595" y="232" width="365" height="88" rx="10" class="box" stroke="#d97706"/>
+  <circle cx="940" cy="252" r="12" fill="#d97706"/><text x="940" y="256" class="bt" text-anchor="middle">④</text>
+  <text x="615" y="260" class="t">Parent 24개 → BM25 (Sparse)</text>
+  <text x="615" y="284" class="s">글자 2-gram 토큰 (조사 대응)</text>
+  <text x="615" y="306" class="xs">"과태료", "표시" 같은 정확한 법률 용어 매칭</text>
+
+  <!-- ===== ② 질의 ===== -->
+  <rect x="20" y="356" width="960" height="330" rx="14" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="40" y="384" class="sec" fill="#047857">② 질의 — 매 질문마다</text>
+
+  <!-- index link -->
+  <path d="M777,320 L777,372 L380,372 L380,404" class="dash" marker-end="url(#arrd)"/>
+  <text x="560" y="366" class="xs">인덱스 사용</text>
+
+  <rect x="40" y="440" width="170" height="110" rx="10" class="box"/>
+  <text x="60" y="470" class="t">사용자 질문</text>
+  <text x="60" y="496" class="xs">"이력서 자동 선별</text>
+  <text x="60" y="514" class="xs"> 솔루션도 규제 대상이야?"</text>
+
+  <path d="M210,470 L278,452" class="ln" marker-end="url(#arr)"/>
+  <path d="M210,520 L278,586" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="282" y="406" width="230" height="104" rx="10" class="box" stroke="#d97706"/>
+  <circle cx="492" cy="426" r="12" fill="#d97706"/><text x="492" y="430" class="bt" text-anchor="middle">④</text>
+  <text x="300" y="434" class="t">Hybrid 검색 (항상)</text>
+  <text x="300" y="460" class="s">Dense ③ 0.5 + BM25 0.5</text>
+  <text x="300" y="482" class="xs">EnsembleRetriever · RRF 순위 결합</text>
+
+  <rect x="282" y="540" width="230" height="96" rx="10" class="box" stroke="#0891b2"/>
+  <circle cx="492" cy="560" r="12" fill="#0891b2"/><text x="492" y="564" class="bt" text-anchor="middle">⑤</text>
+  <text x="300" y="568" class="t">Route (조건부)</text>
+  <text x="300" y="594" class="s">질문에 "제N조"가 있으면</text>
+  <text x="300" y="616" class="s">해당 조를 직접 조회 → 1순위</text>
+
+  <path d="M512,458 L556,500" class="ln" marker-end="url(#arr)"/>
+  <path d="M512,588 L556,548" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="560" y="470" width="160" height="110" rx="10" class="box"/>
+  <text x="578" y="500" class="t">병합 · 중복 제거</text>
+  <text x="578" y="528" class="s">Route 결과 우선</text>
+  <text x="578" y="556" class="t" fill="#047857">→ Top-4 조문</text>
+
+  <path d="M720,525 L758,525" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="762" y="400" width="198" height="190" rx="10" class="box" stroke="#334155"/>
+  <text x="780" y="428" class="t">gpt-4o-mini 답변</text>
+  <text x="780" y="456" class="s">✓ 근거 조항 인용</text>
+  <text x="780" y="478" class="code">[시행령 제2조]</text>
+  <text x="780" y="504" class="s">✓ 해당 여부 단정 금지</text>
+  <text x="780" y="526" class="s">✓ 근거 없으면</text>
+  <text x="780" y="546" class="s">  "확인할 수 없습니다"</text>
+  <text x="780" y="572" class="s">✓ 법률 자문 아님 표시</text>
+
+  <path d="M861,590 L861,616" class="ln" marker-end="url(#arr)"/>
+  <rect x="762" y="620" width="198" height="50" rx="10" fill="#047857"/>
+  <text x="861" y="651" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">답변 + 근거 조문</text>
+
+  <!-- ===== 범례 ===== -->
+  <text x="40" y="722" class="t">개선 단계 (evaluation.md 번호와 동일)</text>
+  <circle cx="52" cy="748" r="11" fill="#2563eb"/><text x="52" y="752" class="bt" text-anchor="middle">②</text>
+  <text x="70" y="753" class="s">조 단위 Chunk</text>
+  <circle cx="188" cy="748" r="11" fill="#7c3aed"/><text x="188" y="752" class="bt" text-anchor="middle">③</text>
+  <text x="206" y="753" class="s">ParentDocument</text>
+  <circle cx="338" cy="748" r="11" fill="#d97706"/><text x="338" y="752" class="bt" text-anchor="middle">④</text>
+  <text x="356" y="753" class="s">Hybrid (BM25)</text>
+  <circle cx="474" cy="748" r="11" fill="#0891b2"/><text x="474" y="752" class="bt" text-anchor="middle">⑤</text>
+  <text x="492" y="753" class="s">Route</text>
+  <rect x="566" y="734" width="394" height="30" rx="6" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="580" y="754" class="s" fill="#b91c1c">✕ Query Rewrite 제외 — MRR↑ 이지만 Recall@4↓</text>
+</svg>
