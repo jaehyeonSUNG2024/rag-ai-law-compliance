@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 500" width="980" height="500" font-family="-apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Segoe UI', 'Malgun Gothic', 'Noto Sans KR', sans-serif">
+  <rect x="0" y="0" width="980" height="500" fill="#fcfcfb"/>
+
+  <text x="40" y="46" font-size="21" font-weight="700" fill="#0b0b0b">Pipeline 6종 검색 성능 비교</text>
+  <text x="40" y="70" font-size="13.5" fill="#52514e">고정 질문 9개 · Top-K 4 고정 · 정답 조항 라벨 기준</text>
+
+  <g font-size="12.5">
+    <rect x="700" y="33" width="11" height="11" rx="2" fill="#2a78d6"/>
+    <text x="717" y="43" fill="#52514e">Recall@4</text>
+    <rect x="800" y="33" width="11" height="11" rx="2" fill="#eb6834"/>
+    <text x="817" y="43" fill="#52514e">MRR</text>
+  </g>
+
+  <g stroke="#e6e5e1" stroke-width="1">
+    <line x1="300" y1="92" x2="300" y2="430"/>
+    <line x1="420" y1="92" x2="420" y2="430"/>
+    <line x1="540" y1="92" x2="540" y2="430"/>
+    <line x1="660" y1="92" x2="660" y2="430"/>
+    <line x1="780" y1="92" x2="780" y2="430"/>
+  </g>
+  <g font-size="11" fill="#8c8b85" text-anchor="middle">
+    <text x="300" y="447">0</text>
+    <text x="420" y="447">0.2</text>
+    <text x="540" y="447">0.4</text>
+    <text x="660" y="447">0.6</text>
+    <text x="780" y="447">0.8</text>
+  </g>
+
+  <!-- 1 Baseline -->
+  <text x="40" y="112" font-size="13.5" fill="#0b0b0b">1. Baseline</text>
+  <text x="40" y="129" font-size="11.5" fill="#8c8b85">글자수 Chunk 200 + Similarity</text>
+  <path d="M300 104 H662.6 Q666.6 104 666.6 108 V116 Q666.6 120 662.6 120 H300 Z" fill="#2a78d6"/>
+  <path d="M300 122 H679.4 Q683.4 122 683.4 126 V134 Q683.4 138 679.4 138 H300 Z" fill="#eb6834"/>
+  <text x="675" y="116" font-size="12" fill="#52514e">0.611</text>
+  <text x="692" y="134" font-size="12" fill="#52514e">0.639</text>
+
+  <!-- 2 조 단위 Chunk -->
+  <text x="40" y="169" font-size="13.5" fill="#0b0b0b">2. + 조 단위 Chunk</text>
+  <text x="40" y="186" font-size="11.5" fill="#8c8b85">조문 경계로 분할</text>
+  <path d="M300 161 H629.6 Q633.6 161 633.6 165 V173 Q633.6 177 629.6 177 H300 Z" fill="#2a78d6"/>
+  <path d="M300 179 H562.4 Q566.4 179 566.4 183 V191 Q566.4 195 562.4 195 H300 Z" fill="#eb6834"/>
+  <text x="642" y="173" font-size="12" fill="#52514e">0.556 ↓</text>
+  <text x="575" y="191" font-size="12" fill="#52514e">0.444 ↓</text>
+
+  <!-- 3 ParentDocument -->
+  <text x="40" y="226" font-size="13.5" fill="#0b0b0b">3. + ParentDocument</text>
+  <text x="40" y="243" font-size="11.5" fill="#8c8b85">작은 조각 검색 → 조 전체 반환</text>
+  <path d="M300 218 H662.6 Q666.6 218 666.6 222 V230 Q666.6 234 662.6 234 H300 Z" fill="#2a78d6"/>
+  <path d="M300 236 H701.6 Q705.6 236 705.6 240 V248 Q705.6 252 701.6 252 H300 Z" fill="#eb6834"/>
+  <text x="675" y="230" font-size="12" fill="#52514e">0.611</text>
+  <text x="714" y="248" font-size="12" fill="#52514e">0.676</text>
+
+  <!-- 4 Hybrid -->
+  <text x="40" y="283" font-size="13.5" fill="#0b0b0b">4. + Hybrid (BM25)</text>
+  <text x="40" y="300" font-size="11.5" fill="#8c8b85">Dense 0.5 + BM25 0.5 · RRF</text>
+  <path d="M300 275 H729.2 Q733.2 275 733.2 279 V287 Q733.2 291 729.2 291 H300 Z" fill="#2a78d6"/>
+  <path d="M300 293 H718.4 Q722.4 293 722.4 297 V305 Q722.4 309 718.4 309 H300 Z" fill="#eb6834"/>
+  <text x="741" y="287" font-size="12" fill="#52514e">0.722</text>
+  <text x="731" y="305" font-size="12" fill="#52514e">0.704</text>
+
+  <!-- 5 Rewrite -->
+  <text x="40" y="340" font-size="13.5" fill="#0b0b0b">5. + Rewrite · Route</text>
+  <text x="40" y="357" font-size="11.5" fill="#8c8b85">질의 재작성 + 조 번호 직접 조회</text>
+  <path d="M300 332 H662.6 Q666.6 332 666.6 336 V344 Q666.6 348 662.6 348 H300 Z" fill="#2a78d6"/>
+  <path d="M300 350 H762.8 Q766.8 350 766.8 354 V362 Q766.8 366 762.8 366 H300 Z" fill="#eb6834"/>
+  <text x="675" y="344" font-size="12" fill="#52514e">0.611 ↓</text>
+  <text x="775" y="362" font-size="12" fill="#52514e">0.778</text>
+
+  <!-- 6 Final -->
+  <rect x="32" y="386" width="916" height="44" rx="6" fill="#f0f5fb"/>
+  <text x="40" y="404" font-size="13.5" font-weight="700" fill="#0b0b0b">6. Final — Hybrid + Route</text>
+  <text x="40" y="421" font-size="11.5" fill="#52514e">Baseline 대비 Recall@4 +18% · MRR +22%</text>
+  <path d="M300 396 H729.2 Q733.2 396 733.2 400 V408 Q733.2 412 729.2 412 H300 Z" fill="#2a78d6"/>
+  <path d="M300 414 H762.8 Q766.8 414 766.8 418 V426 Q766.8 430 762.8 430 H300 Z" fill="#eb6834"/>
+  <text x="741" y="408" font-size="12" font-weight="700" fill="#0b0b0b">0.722</text>
+  <text x="775" y="426" font-size="12" font-weight="700" fill="#0b0b0b">0.778</text>
+
+  <g font-size="12">
+    <text x="830" y="122" fill="#8c8b85">기준</text>
+    <text x="830" y="179" fill="#52514e">✕ 폐기</text>
+    <text x="830" y="236" fill="#52514e">✓ 유지</text>
+    <text x="830" y="293" fill="#52514e">✓ 유지</text>
+    <text x="830" y="350" fill="#52514e">✕ Rewrite 폐기</text>
+    <text x="830" y="413" font-weight="700" fill="#0b0b0b">★ 채택</text>
+  </g>
+
+  <text x="40" y="478" font-size="12" fill="#52514e">2번 — 조문 경계 분할은 단독 적용 시 역효과. 긴 조문의 의미 희석을 측정으로 확인하고 3번으로 교체</text>
+  <text x="40" y="496" font-size="12" fill="#52514e">5번 — MRR은 최고치였으나 원 질의와 재작성 질의가 Top-4를 분할 점유해 Recall 하락. Rewrite만 제외하고 Route는 유지</text>
+</svg>
